@@ -1,0 +1,9 @@
+---
+version: '2'
+
+services:
+  guinea-pig:
+    image: docker.flcn.io/test/guinea-pig
+    log_driver: journald
+    ports:
+      - 5000:5000
