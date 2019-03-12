@@ -19,7 +19,8 @@ pipeline {
       }
     }
     stage('Publish') {
-      withDockerRegistry(credentialsId: 'artifactory', url: 'https://docker.flcn.io') {
+      steps {
+        sh 'pip install --user -r requirements.txt'
         sh "docker push docker.flcn.io/test/guinea-pig:${SHA}"
       }
     }
