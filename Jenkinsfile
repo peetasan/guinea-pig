@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  environment {
+    SHA = sh(returnStdout: true, script: 'git rev-parse HEAD')
+    }
   options {
         skipStagesAfterUnstable()
     }
@@ -17,9 +20,8 @@ pipeline {
     }
     stage('Publish') {
       steps {
-        def commitId = sh(returnStdout: true, script: 'git rev-parse HEAD')
         sh 'pip install --user -r requirements.txt'
-        sh "docker push docker.flcn.io/test/guinea-pig:${commitId}"
+        sh "docker push docker.flcn.io/test/guinea-pig:${SHA}"
       }
     }
   }
