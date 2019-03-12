@@ -15,7 +15,7 @@ pipeline {
     stage('Build') {
       steps {
         sh 'pip install --user -r requirements.txt'
-        sh 'docker build .'
+        sh "docker build -t docker.flcn.io/test/guinea-pig:${SHA} ."
       }
     }
     stage('Publish') {
