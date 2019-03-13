@@ -1,11 +1,15 @@
 pipeline {
-  agent any
+  agent {
+    dockerfile {
+      reuseNode true
+    }
+  }
   environment {
     SHA = sh(returnStdout: true, script: 'git rev-parse HEAD')
-    }
+  }
   options {
         skipStagesAfterUnstable()
-    }
+  }
   stages {
     stage('Clone') {
       steps {
@@ -15,12 +19,16 @@ pipeline {
     stage('Build') {
       steps {
         sh 'pip install --user -r requirements.txt'
-        sh "docker build . -t docker.flcn.io/test/guinea-pig:${SHA}"
       }
     }
     stage('Publish') {
+      agent {
+        docker { 
+          image 'docker.flcn.io/base/python:2.7'
+          registryCredentialsId 'artifactory'
+        }
+      }
       steps {
-        sh 'pip install --user -r requirements.txt'
         sh "docker push docker.flcn.io/test/guinea-pig:${SHA}"
       }
     }
