@@ -1,4 +1,4 @@
-FROM python:2.7-alpine
+FROM docker.flcn.io/base/python:2.7
 
 COPY ./requirements.txt /opt/guinea_pig/
 RUN pip install -r /opt/guinea_pig/requirements.txt
