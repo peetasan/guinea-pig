@@ -11,11 +11,6 @@ pipeline {
         skipStagesAfterUnstable()
   }
   stages {
-    stage('Clone') {
-      steps {
-        git 'https://github.com/peetasan/guinea-pig'
-      }
-    }
     stage('Build') {
       steps {
         sh 'pip install --user -r requirements.txt'
